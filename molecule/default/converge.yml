@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include ansible-schedule-duplicity"
+      include_role:
+        name: "ansible-schedule-duplicity"
