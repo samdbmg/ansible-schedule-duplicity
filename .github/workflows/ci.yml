@@ -1,0 +1,31 @@
+---
+name: CI with Molecule
+"on":
+  - push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: Setup Python 3
+        uses: actions/setup-python@v1
+        with:
+          python-version: '3.x' # Version range or exact version of a Python version to use, using SemVer's version range syntax
+          architecture: 'x64' # optional x64 or x86. Defaults to x64 if not specified
+      - name: Install deps
+        run: sudo apt-get install -y docker && pip3 install --upgrade pip && pip3 install --upgrade ansible ansible-lint docker molecule[docker]
+
+      - name: Check syntax
+        run: molecule syntax
+      - name: Create instances, prepare environment
+        run: molecule create && molecule prepare
+      - name: Apply the role to the instance
+        run: molecule converge
+      - name: Check the role is idempotent
+        run: molecule idempotence
+      - name: Run tests on results
+        run: molecule verify
+      - name: Clean up instance
+        run: molecule destroy
