@@ -1,0 +1,11 @@
+*.retry
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+*.log
+
+# Local certificates generated for testing
+molecule/default/resources/generated-certs
