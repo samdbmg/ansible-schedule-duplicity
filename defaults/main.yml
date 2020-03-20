@@ -1,2 +1,24 @@
 ---
 # defaults file for ansible-schedule-duplicity
+
+# Paths to be backed up. Must be set by user, this is just an example
+duplicity_target_paths:
+  - path: /opt/my-awesome-config
+    name: awesome-config
+  - path: /etc/nginx
+
+# Should we attempt to install Duplicity?
+install_duplicity: true
+
+# How often should scheduled backups run. Set to None to disable, defaults to 3AM daily
+backup_schedule: 0 3 * * *
+
+# How long to wait between full backups and do incremenals instead
+# (see http://duplicity.nongnu.org/vers7/duplicity.1.html#sect8 for valid values)
+full_backup_after: 1W
+
+# How long to preserve backups. Defaults to a year
+delete_backups_after: 1Y
+
+# Should we run a backup immediately too?
+run_backup_now: true

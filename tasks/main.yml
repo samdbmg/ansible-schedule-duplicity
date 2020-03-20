@@ -1,2 +1,9 @@
 ---
 # tasks file for ansible-schedule-duplicity
+# Install Duplicity
+
+# Write out credentials environment file
+
+# Run commands manually
+
+# Insert Duplicity commands into crontab
