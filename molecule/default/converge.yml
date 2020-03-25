@@ -1,7 +1,15 @@
 ---
 - name: Converge
   hosts: all
+  vars:
+    duplicity_target_paths:
+      - path: /opt/awesome-config
+        name: awesome-config
+      - path: /opt/other-data
+    backup_url_stem: file:///backupdest/
+    gpg_key: duplicity
   tasks:
+
     - name: "Include ansible-schedule-duplicity"
       include_role:
         name: "ansible-schedule-duplicity"

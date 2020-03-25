@@ -1,0 +1,33 @@
+---
+- name: Prepare
+  hosts: all
+  tasks:
+    - name: Create source locations to backup
+      file:
+        path: "{{ item }}"
+        state: directory
+      loop:
+        - /opt/awesome-config
+        - /opt/other-data
+
+    - name: Create some data
+      copy:
+        content: This is some file content
+        dest: "{{ item }}"
+      loop:
+        - /opt/awesome-config/file-1
+        - /opt/awesome-config/file-2
+        - /opt/other-data/file-a
+
+    - name: Purge backup destination
+      file:
+        path: /backupdest
+        state: "{{ item }}"
+      loop:
+        - absent
+        - directory
+
+    - name: Create cron directory, because it doesn't exist in container
+      file:
+        path: /etc/cron.d
+        state: directory
