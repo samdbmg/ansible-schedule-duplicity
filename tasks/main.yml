@@ -1,9 +1,34 @@
 ---
-# tasks file for ansible-schedule-duplicity
-# Install Duplicity
+- name: Install Duplicity
+  package:
+    name: duplicity
+    state: present
+  when: install_duplicity
 
-# Write out credentials environment file
+- name: Template out credentials file
+  template:
+    src: duplicity-backup.env.j2
+    dest: /etc/duplicity-backup.env
+    owner: root
+    group: root
+    mode: 0600
 
 # Run commands manually
+- name: Run manual backups
+  command: duplicity --full-if-older-than {{ full_backup_after }} {{ item.path }} {{ backup_url_stem.strip("/") }}/{{ item.name | default(item.path) }}
+  environment: "{{ backup_env_vars| combine({'PASSPHRASE': gpg_key}) }}"
+  loop: "{{ duplicity_target_paths }}"
+  when: run_backup_now
 
-# Insert Duplicity commands into crontab
+- name: Run manual stale backup deletion
+  command: duplicity remove-older-than {{ delete_backups_after }} {{ backup_url_stem.strip("/") }}/{{ item.name | default(item.path) }}
+  environment: "{{ backup_env_vars| combine({'PASSPHRASE': gpg_key}) }}"
+  loop: "{{ duplicity_target_paths }}"
+  when: run_backup_now
+
+- name: Insert duplicity commands into crontab
+  template:
+    src: duplicity-backup.cron.j2
+    dest: /etc/cron.d/duplicity
+    owner: root
+    group: root

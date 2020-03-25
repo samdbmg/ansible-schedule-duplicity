@@ -2,10 +2,19 @@
 # defaults file for ansible-schedule-duplicity
 
 # Paths to be backed up. Must be set by user, this is just an example
-duplicity_target_paths:
-  - path: /opt/my-awesome-config
-    name: awesome-config
-  - path: /etc/nginx
+# duplicity_target_paths:
+#   - path: /opt/my-awesome-config
+#     name: awesome-config
+#   - path: /etc/nginx
+
+# Destination for backup, to which target path name will be appended. Must be set by user
+# backup_url_stem: dpbx:///my_folder
+
+# Passphrase to use for backup encryption
+gpg_key: duplicity
+
+# Any env vars needed for backup destination (e.g. access tokens)
+backup_env_vars: {}
 
 # Should we attempt to install Duplicity?
 install_duplicity: true
