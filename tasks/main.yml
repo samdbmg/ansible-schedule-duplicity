@@ -19,12 +19,14 @@
   environment: "{{ backup_env_vars| combine({'PASSPHRASE': gpg_key}) }}"
   loop: "{{ duplicity_target_paths }}"
   when: run_backup_now
+  changed_when: false  # Running manual backups always leads to changes!
 
 - name: Run manual stale backup deletion
   command: duplicity remove-older-than {{ delete_backups_after }} {{ backup_url_stem.strip("/") }}/{{ item.name | default(item.path) }}
   environment: "{{ backup_env_vars| combine({'PASSPHRASE': gpg_key}) }}"
   loop: "{{ duplicity_target_paths }}"
   when: run_backup_now
+  changed_when: false  # Running manual backups always leads to changes!
 
 - name: Insert duplicity commands into crontab
   template:
