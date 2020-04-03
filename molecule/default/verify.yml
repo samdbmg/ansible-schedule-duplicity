@@ -3,7 +3,51 @@
 
 - name: Verify
   hosts: all
+  vars:
+    expected_backup_dirs:
+      - /backupdest/awesome-config/
+      - /backupdest/opt/other-data/
+    expected_restored_files:
+      - /opt/test-restore/file-1
+      - /opt/test-restore/file-2
   tasks:
-  - name: Example assertion
+  - name: Find backup directories
+    stat:
+      path: "{{ item }}"
+    register: stat_result
+    loop: "{{ expected_backup_dirs }}"
+
+  - name: Verify backup directories all exist
     assert:
-      that: true
+      that: stat_result.results[index].stat.exists == true
+      fail_msg: "File {{ item }} not found"
+    loop: "{{ expected_backup_dirs }}"
+    loop_control:
+      index_var: index
+
+  - name: (Re)make a restore location
+    file:
+      path: /opt/test-restore
+      state: "{{ item }}"
+    loop:
+      - absent
+      - directory
+
+  - name: Attempt to restore backup
+    command: "duplicity file:///backupdest/awesome-config /opt/test-restore"
+    environment:
+      PASSPHRASE: duplicity
+
+  - name: Find restored files
+    stat:
+      path: "{{ item }}"
+    register: stat_result
+    loop: "{{ expected_restored_files }}"
+
+  - name: Verify restored files all exist
+    assert:
+      that: stat_result.results[index].stat.exists == true
+      fail_msg: "File {{ item }} not found"
+    loop: "{{ expected_restored_files }}"
+    loop_control:
+      index_var: index
