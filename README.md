@@ -4,10 +4,12 @@ ansible-schedule-duplicity
 Set up scheduled (cronjob) backups using the [Duplicity](http://duplicity.nongnu.org/) backup tool, which supports
 incremental encrypted backups to local filesystem mounts and various cloud storage locations, e.g. Dropbox.
 
+Note that Duplicity and various Python3 modules for backend support will be installed from PyPI into a virtualenv at
+`/opt/duplicity_venv`: see the `install_duplicity` option for ways to change that.
+
 Requirements
 ------------
-
-I've assumed there exists a `duplicity` package for whatever OS you happen to be running rather than trying to build it.
+None.
 
 Role Variables
 --------------
@@ -54,6 +56,14 @@ backups. See [the manpage](http://duplicity.nongnu.org/vers7/duplicity.1.html#se
 run_backup_now: true
 ```
 Should we run a full backup immediately as well as the cronjob?
+
+```yaml
+install_duplicity: true
+duplicity_venv_path: /opt/duplicity_venv
+duplicity_binary: "/usr/local/bin/duplicity"
+```
+Should we install Duplicity, and if so, where (a Python3 virtualenv will be created for it). We'll also write a wrapper
+script to `duplicity_binary` to execute it.
 
 Dependencies
 ------------

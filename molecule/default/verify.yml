@@ -34,7 +34,7 @@
       - directory
 
   - name: Attempt to restore backup
-    command: "duplicity file:///backupdest/awesome-config /opt/test-restore"
+    command: "/usr/local/bin/duplicity file:///backupdest/awesome-config /opt/test-restore"
     environment:
       PASSPHRASE: duplicity
 
