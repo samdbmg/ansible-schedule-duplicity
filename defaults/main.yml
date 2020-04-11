@@ -16,9 +16,6 @@ gpg_key: duplicity
 # Any env vars needed for backup destination (e.g. access tokens)
 backup_env_vars: {}
 
-# Should we attempt to install Duplicity?
-install_duplicity: true
-
 # How often should scheduled backups run. Set to None to disable, defaults to 3AM daily
 backup_schedule: 0 3 * * *
 
@@ -31,3 +28,12 @@ delete_backups_after: 1Y
 
 # Should we run a backup immediately too?
 run_backup_now: true
+
+# Should we attempt to install Duplicity?
+install_duplicity: true
+
+# Where should the virtualenv containing Duplicity live?
+duplicity_venv_path: /opt/duplicity-venv
+
+# Where will the Duplicity binary be. By default we write a helper script to do this
+duplicity_binary: /usr/local/bin/duplicity
