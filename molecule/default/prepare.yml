@@ -9,6 +9,7 @@
       loop:
         - /opt/awesome-config
         - /opt/other-data
+        - /opt/multiple/slashes
 
     - name: Create some data
       copy:
@@ -18,6 +19,7 @@
         - /opt/awesome-config/file-1
         - /opt/awesome-config/file-2
         - /opt/other-data/file-a
+        - /opt/multiple/slashes/file-b
 
     - name: Purge backup destination
       file:

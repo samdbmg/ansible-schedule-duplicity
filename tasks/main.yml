@@ -1,4 +1,5 @@
 ---
+
 - name: Install Duplicity library requirements
   apt:
     package:
@@ -35,14 +36,14 @@
 
 # Run commands manually
 - name: Run manual backups
-  command: "{{ duplicity_binary }} --full-if-older-than {{ full_backup_after }} {{ item.path }} {{ backup_url_stem.strip('/') }}/{{ item.name | default(item.path) }}"
+  command: "{{ duplicity_binary }} --full-if-older-than {{ full_backup_after }} {{ item.path }} {{ backup_url_stem.rstrip('/') }}/{{ (item.name | default(item.path)).strip('/') }}"
   environment: "{{ backup_env_vars| combine({'PASSPHRASE': gpg_key}) }}"
   loop: "{{ duplicity_target_paths }}"
   when: run_backup_now
   changed_when: false  # Running manual backups always leads to changes!
 
 - name: Run manual stale backup deletion
-  command: "{{ duplicity_binary }} remove-older-than {{ delete_backups_after }} {{ backup_url_stem.strip('/') }}/{{ item.name | default(item.path) }}"
+  command: "{{ duplicity_binary }} remove-older-than {{ delete_backups_after }} {{ backup_url_stem.rstrip('/') }}/{{ (item.name | default(item.path)).strip('/') }}"
   environment: "{{ backup_env_vars| combine({'PASSPHRASE': gpg_key}) }}"
   loop: "{{ duplicity_target_paths }}"
   when: run_backup_now

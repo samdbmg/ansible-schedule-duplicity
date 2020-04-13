@@ -1,5 +1,5 @@
 # Cronjobs for scheduled backups with Duplicity
 {% for item in duplicity_target_paths %}
-{{ backup_schedule }} . /etc/duplicity-backup.env; {{ duplicity_binary }} --full-if-older-than {{ full_backup_after }} {{ item.path }} {{ backup_url_stem.strip("/") }}/{{ item.name | default(item.path) }}
-{{ backup_schedule }} . /etc/duplicity-backup.env; {{ duplicity_binary }} remove-older-than {{ backup_url_stem.strip("/") }}/{{ item.name | default(item.path) }}
+{{ backup_schedule }} . /etc/duplicity-backup.env; {{ duplicity_binary }} --full-if-older-than {{ full_backup_after }} {{ item.path }} {{ backup_url_stem.rstrip('/') }}/{{ (item.name | default(item.path)).strip('/') }}
+{{ backup_schedule }} . /etc/duplicity-backup.env; {{ duplicity_binary }} remove-older-than {{ delete_backups_after }} {{ backup_url_stem.rstrip('/') }}/{{ (item.name | default(item.path)).strip('/') }}
 {% endfor %}
