@@ -7,6 +7,7 @@
     expected_backup_dirs:
       - /backupdest/awesome-config/
       - /backupdest/opt/other-data/
+      - /backupdest/opt/multiple/slashes
     expected_restored_files:
       - /opt/test-restore/file-1
       - /opt/test-restore/file-2
