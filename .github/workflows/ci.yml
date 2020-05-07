@@ -1,7 +1,11 @@
 ---
 name: CI with Molecule
 "on":
-  - push
+  push:
+  # Build master every Thursday at 7AM (schedule only applies to the master branch)
+  schedule:
+    - cron: "0 7 * * 4"
+
 
 jobs:
   test:
