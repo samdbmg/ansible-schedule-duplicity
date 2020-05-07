@@ -12,7 +12,7 @@
 - name: Install Duplicity and backend support Python modules
   pip:
     name:
-      - duplicity
+      - "{{ duplicity_install_package }}"
       - dropbox
     virtualenv: "{{ duplicity_venv_path }}"
     virtualenv_python: python3
