@@ -32,6 +32,9 @@ run_backup_now: true
 # Should we attempt to install Duplicity?
 install_duplicity: true
 
+# What package name (and version requirement) should we install?
+duplicity_install_package: duplicity
+
 # Where should the virtualenv containing Duplicity live?
 duplicity_venv_path: /opt/duplicity-venv
 

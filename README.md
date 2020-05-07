@@ -59,6 +59,7 @@ Should we run a full backup immediately as well as the cronjob?
 
 ```yaml
 install_duplicity: true
+duplicity_install_package: duplicity
 duplicity_venv_path: /opt/duplicity_venv
 duplicity_binary: "/usr/local/bin/duplicity"
 ```
