@@ -6,6 +6,7 @@
       file:
         path: "{{ item }}"
         state: directory
+        mode: 0700
       loop:
         - /opt/awesome-config
         - /opt/other-data
@@ -15,6 +16,7 @@
       copy:
         content: This is some file content
         dest: "{{ item }}"
+        mode: 0600
       loop:
         - /opt/awesome-config/file-1
         - /opt/awesome-config/file-2
@@ -25,6 +27,7 @@
       file:
         path: /backupdest
         state: "{{ item }}"
+        mode: 0700
       loop:
         - absent
         - directory
@@ -33,3 +36,4 @@
       file:
         path: /etc/cron.d
         state: directory
+        mode: 0700

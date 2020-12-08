@@ -20,7 +20,7 @@
 
   - name: Verify backup directories all exist
     assert:
-      that: stat_result.results[index].stat.exists == true
+      that: stat_result.results[index].stat.exists
       fail_msg: "File {{ item }} not found"
     loop: "{{ expected_backup_dirs }}"
     loop_control:
@@ -30,12 +30,15 @@
     file:
       path: /opt/test-restore
       state: "{{ item }}"
+      mode: 0700
     loop:
       - absent
       - directory
 
   - name: Attempt to restore backup
     command: "/usr/local/bin/duplicity file:///backupdest/awesome-config /opt/test-restore"
+    args:
+      creates: "{{ expected_restored_files }}"
     environment:
       PASSPHRASE: duplicity
 
@@ -47,7 +50,7 @@
 
   - name: Verify restored files all exist
     assert:
-      that: stat_result.results[index].stat.exists == true
+      that: stat_result.results[index].stat.exists
       fail_msg: "File {{ item }} not found"
     loop: "{{ expected_restored_files }}"
     loop_control:

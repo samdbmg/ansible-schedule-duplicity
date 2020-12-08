@@ -6,8 +6,8 @@ driver:
 lint: |
   set -e
   yamllint .
-  ansible-lint
-  flake8
+  # Ignore role name when linting
+  ansible-lint -x 106
 platforms:
   - name: instance
     image: leandelivery/docker-systemd:ubuntu-18.04

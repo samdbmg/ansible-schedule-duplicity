@@ -37,14 +37,14 @@
 
 # Run commands manually
 - name: Run manual backups
-  command: "{{ duplicity_binary }} --full-if-older-than {{ full_backup_after }} {{ item.path }} {{ backup_url_stem.rstrip('/') }}/{{ (item.name | default(item.path)).strip('/') }}"
+  command: "{{ duplicity_binary }} --full-if-older-than {{ full_backup_after }} {{ item.path }} {{ backup_url_stem.rstrip('/') }}/{{ (item.name | default(item.path)).strip('/') }}"  # noqa 204 - Command line too long, can't wrap
   environment: "{{ backup_env_vars| combine({'PASSPHRASE': gpg_key}) }}"
   loop: "{{ duplicity_target_paths }}"
   when: run_backup_now
   changed_when: false  # Running manual backups always leads to changes!
 
 - name: Run manual stale backup deletion
-  command: "{{ duplicity_binary }} remove-older-than {{ delete_backups_after }} {{ backup_url_stem.rstrip('/') }}/{{ (item.name | default(item.path)).strip('/') }}"
+  command: "{{ duplicity_binary }} remove-older-than {{ delete_backups_after }} {{ backup_url_stem.rstrip('/') }}/{{ (item.name | default(item.path)).strip('/') }}"  # noqa 204 - Command line too long, can't wrap
   environment: "{{ backup_env_vars| combine({'PASSPHRASE': gpg_key}) }}"
   loop: "{{ duplicity_target_paths }}"
   when: run_backup_now
@@ -56,3 +56,4 @@
     dest: /etc/cron.d/duplicity
     owner: root
     group: root
+    mode: 0644
