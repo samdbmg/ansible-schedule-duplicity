@@ -6,6 +6,7 @@
       - librsync-dev
       - python3-pip
       - virtualenv
+      - gettext
     state: present
   when: install_duplicity
 
