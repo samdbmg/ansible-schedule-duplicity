@@ -33,9 +33,7 @@ run_backup_now: true
 install_duplicity: true
 
 # What package name (and version requirement) should we install?
-# Pinned to before 0.8.13 because it introduces an undeclared dependency on setuptools_scm, which means
-# the install is failing.
-duplicity_install_package: duplicity<0.8.13
+duplicity_install_package: duplicity
 
 # Where should the virtualenv containing Duplicity live?
 duplicity_venv_path: /opt/duplicity-venv
