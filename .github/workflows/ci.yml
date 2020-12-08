@@ -23,6 +23,8 @@ jobs:
 
       - name: Check syntax
         run: molecule syntax
+      - name: Lint role
+        run: molecule lint
       - name: Create instances, prepare environment
         run: molecule create && molecule prepare
       - name: Apply the role to the instance
