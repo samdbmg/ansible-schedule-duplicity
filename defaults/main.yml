@@ -19,6 +19,9 @@ backup_env_vars: {}
 # How often should scheduled backups run. Set to None to disable, defaults to 3AM daily
 backup_schedule: 0 3 * * *
 
+# Which user should the backup cronjobs run as?
+backup_cronjob_user: root
+
 # How long to wait between full backups and do incremenals instead
 # (see http://duplicity.nongnu.org/vers7/duplicity.1.html#sect8 for valid values)
 full_backup_after: 1W
