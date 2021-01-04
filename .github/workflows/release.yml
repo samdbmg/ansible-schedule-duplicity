@@ -1,6 +1,6 @@
 ---
 name: Cut a release
-on:
+"on":
   workflow_dispatch:
     inputs:
       version:
