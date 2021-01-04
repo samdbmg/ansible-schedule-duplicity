@@ -13,4 +13,5 @@
 
     - name: "Include ansible-schedule-duplicity"
       include_role:
-        name: "ansible-schedule-duplicity"
+        # Apply the role from the top-level directory name rather than hardcoding
+        name: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') | basename }}"
