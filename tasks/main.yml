@@ -7,6 +7,7 @@
       - python3-pip
       - virtualenv
       - gettext
+      - gpg-agent
     state: present
   when: install_duplicity
 
