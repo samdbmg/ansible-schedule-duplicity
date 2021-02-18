@@ -14,7 +14,7 @@
       - "{{ duplicity_install_package }}"
       - dropbox
     virtualenv: "{{ duplicity_venv_path }}"
-    virtualenv_python: python3
+    virtualenv_command: python3 -m venv
     state: present
   when: install_duplicity
 

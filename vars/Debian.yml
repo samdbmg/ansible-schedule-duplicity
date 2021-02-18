@@ -2,6 +2,6 @@
 _duplicity_dependent_packages:
   - librsync-dev
   - python3-pip
-  - virtualenv
+  - python3-venv
   - gettext
   - gpg-agent
