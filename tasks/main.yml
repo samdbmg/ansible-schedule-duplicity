@@ -1,13 +1,10 @@
 ---
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
 
 - name: Install Duplicity library requirements
-  apt:
-    package:
-      - librsync-dev
-      - python3-pip
-      - virtualenv
-      - gettext
-      - gpg-agent
+  package:
+    name: "{{ _duplicity_dependent_packages }}"
     state: present
   when: install_duplicity
 
@@ -17,7 +14,7 @@
       - "{{ duplicity_install_package }}"
       - dropbox
     virtualenv: "{{ duplicity_venv_path }}"
-    virtualenv_python: python3
+    virtualenv_command: python3 -m venv
     state: present
   when: install_duplicity
 
