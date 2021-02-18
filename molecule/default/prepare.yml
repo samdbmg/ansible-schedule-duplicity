@@ -2,6 +2,11 @@
 - name: Prepare
   hosts: all
   tasks:
+    - name: Update apt cache (Ubuntu)
+      apt:
+        update_cache: true
+      when: ansible_distribution == "Ubuntu"
+
     - name: Create source locations to backup
       file:
         path: "{{ item }}"
