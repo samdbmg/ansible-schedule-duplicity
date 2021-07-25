@@ -28,7 +28,7 @@
 - name: Template out credentials file
   template:
     src: duplicity-backup.env.j2
-    dest: /etc/duplicity-backup.env
+    dest: /etc/{{ duplicity_install_name }}-backup.env
     owner: root
     group: root
     mode: 0600
@@ -51,7 +51,7 @@
 - name: Insert duplicity commands into crontab
   template:
     src: duplicity-backup.cron.j2
-    dest: /etc/cron.d/duplicity
+    dest: /etc/cron.d/{{ duplicity_install_name }}
     owner: root
     group: root
     mode: 0644

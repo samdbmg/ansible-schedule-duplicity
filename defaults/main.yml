@@ -43,3 +43,6 @@ duplicity_venv_path: /opt/duplicity-venv
 
 # Where will the Duplicity binary be. By default we write a helper script to do this
 duplicity_binary: /usr/local/bin/duplicity
+
+# Customise the name of crontabs and config files
+duplicity_install_name: duplicity

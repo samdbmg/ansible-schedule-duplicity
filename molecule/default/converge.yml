@@ -15,3 +15,18 @@
       include_role:
         # Apply the role from the top-level directory name rather than hardcoding
         name: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') | basename }}"
+
+- name: Converge with another install name to check for conflicts
+  hosts: all
+  vars:
+    duplicity_target_paths:
+      - path: /opt/awesome-config
+    backup_url_stem: file:///otherbackup/
+    gpg_key: duplicity2
+    duplicity_install_name: secondinstall
+  tasks:
+
+    - name: "Include ansible-schedule-duplicity"
+      include_role:
+        # Apply the role from the top-level directory name rather than hardcoding
+        name: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') | basename }}"

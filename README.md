@@ -66,6 +66,12 @@ duplicity_binary: "/usr/local/bin/duplicity"
 Should we install Duplicity, and if so, where (a Python3 virtualenv will be created for it). We'll also write a wrapper
 script to `duplicity_binary` to execute it.
 
+```yaml
+duplicity_install_name: duplicity
+```
+Customise the name of this backup installation in cronjobs and files, to allow the role to be used multiple times on
+a host.
+
 Dependencies
 ------------
 
