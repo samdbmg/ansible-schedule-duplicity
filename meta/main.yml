@@ -1,6 +1,7 @@
 galaxy_info:
   author: Sam Mesterton-Gibbons <sam@samn.co.uk>
   role_name: schedule_duplicity
+  namespace: samdbmg
   description: Schedule backups of key directories using Duplicity
 
   license: MIT
