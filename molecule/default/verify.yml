@@ -8,6 +8,7 @@
       - /backupdest/awesome-config/
       - /backupdest/opt/other-data/
       - /backupdest/opt/multiple/slashes
+      - /other-backupdest/opt/separate-dest
     expected_restored_files:
       - /opt/test-restore/file-1
       - /opt/test-restore/file-2

@@ -21,14 +21,19 @@ duplicity_target_paths:
   - path: /opt/my-awesome-config
     name: awesome-config
   - path: /etc/nginx
+  - path: /opt/other-data
+    backup_url_stem: file:///some-other-location-for-just-this-path
 ```
-A list of paths to back up, and optional names for the backups. If no name is given, the full path is used.
+A list of paths to back up, and optional names for the backups. If no name is given, the full path is used. A
+`backup_url_stem` may also be specified, to override the default set below.
 
 ```yaml
 backup_url_stem: dpbx:///my_folder
 ```
-Start of the backup path, to which the `name` or `path` above will be appended. See the
+Default start of the backup path, to which the `name` or `path` above will be appended. See the
 [Duplicity manpage](http://duplicity.nongnu.org/vers7/duplicity.1.html) for how to use various backends.
+
+Can be overidden per-path with the `backup_url_stem` var.
 
 **Optional Variables**
 ```yaml

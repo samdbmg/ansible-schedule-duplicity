@@ -1,4 +1,4 @@
 # Cronjobs for scheduled backups with Duplicity
 {% for item in duplicity_target_paths %}
-{{ backup_schedule }}   {{ backup_cronjob_user }}   . /etc/{{ duplicity_install_name }}-backup.env; {{ duplicity_binary }} -v warning --full-if-older-than {{ full_backup_after }} --no-print-statistics {{ item.path }} {{ backup_url_stem.rstrip('/') }}/{{ (item.name | default(item.path)).strip('/') }}; {{ duplicity_binary }} -v warning remove-older-than {{ delete_backups_after }} --force {{ backup_url_stem.rstrip('/') }}/{{ (item.name | default(item.path)).strip('/') }}
+{{ backup_schedule }}   {{ backup_cronjob_user }}   . /etc/{{ duplicity_install_name }}-backup.env; {{ duplicity_binary }} -v warning --full-if-older-than {{ full_backup_after }} --no-print-statistics {{ item.path }} {{ (item.backup_url_stem | default(backup_url_stem)).rstrip('/') }}/{{ (item.name | default(item.path)).strip('/') }}; {{ duplicity_binary }} -v warning remove-older-than {{ delete_backups_after }} --force {{ (item.backup_url_stem | default(backup_url_stem)).rstrip('/') }}/{{ (item.name | default(item.path)).strip('/') }}
 {% endfor %}

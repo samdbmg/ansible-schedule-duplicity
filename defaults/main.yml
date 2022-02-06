@@ -6,6 +6,7 @@
 #   - path: /opt/my-awesome-config
 #     name: awesome-config
 #   - path: /etc/nginx
+#     backup_url_stem: dpbx:///other_folder
 
 # Destination for backup, to which target path name will be appended. Must be set by user
 # backup_url_stem: dpbx:///my_folder
