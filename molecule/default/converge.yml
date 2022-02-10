@@ -7,6 +7,8 @@
         name: awesome-config
       - path: /opt/other-data
       - path: /opt///multiple//slashes
+      - path: /opt/separate-dest
+        backup_url_stem: file:///other-backupdest/
     backup_url_stem: file:///backupdest/
     gpg_key: duplicity
   tasks:

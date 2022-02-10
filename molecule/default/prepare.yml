@@ -16,6 +16,7 @@
         - /opt/awesome-config
         - /opt/other-data
         - /opt/multiple/slashes
+        - /opt/separate-dest
 
     - name: Create some data
       copy:
@@ -27,10 +28,20 @@
         - /opt/awesome-config/file-2
         - /opt/other-data/file-a
         - /opt/multiple/slashes/file-b
+        - /opt/separate-dest/file-1
 
     - name: Purge backup destination
       file:
         path: /backupdest
+        state: "{{ item }}"
+        mode: 0700
+      loop:
+        - absent
+        - directory
+
+    - name: Purge backup destination
+      file:
+        path: /other-backupdest
         state: "{{ item }}"
         mode: 0700
       loop:
