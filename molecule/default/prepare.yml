@@ -3,12 +3,12 @@
   hosts: all
   tasks:
     - name: Update apt cache (Ubuntu)
-      apt:
+      ansible.builtin.apt:
         update_cache: true
       when: ansible_distribution == "Ubuntu"
 
     - name: Create source locations to backup
-      file:
+      ansible.builtin.file:
         path: "{{ item }}"
         state: directory
         mode: 0700
@@ -19,7 +19,7 @@
         - /opt/separate-dest
 
     - name: Create some data
-      copy:
+      ansible.builtin.copy:
         content: This is some file content
         dest: "{{ item }}"
         mode: 0600
@@ -31,7 +31,7 @@
         - /opt/separate-dest/file-1
 
     - name: Purge backup destination
-      file:
+      ansible.builtin.file:
         path: /backupdest
         state: "{{ item }}"
         mode: 0700
@@ -40,7 +40,7 @@
         - directory
 
     - name: Purge backup destination
-      file:
+      ansible.builtin.file:
         path: /other-backupdest
         state: "{{ item }}"
         mode: 0700
@@ -49,7 +49,7 @@
         - directory
 
     - name: Create cron directory, because it doesn't exist in container
-      file:
+      ansible.builtin.file:
         path: /etc/cron.d
         state: directory
         mode: 0700

@@ -14,13 +14,13 @@
       - /opt/test-restore/file-2
   tasks:
   - name: Find backup directories
-    stat:
+    ansible.builtin.stat:
       path: "{{ item }}"
     register: stat_result
     loop: "{{ expected_backup_dirs }}"
 
   - name: Verify backup directories all exist
-    assert:
+    ansible.builtin.assert:
       that: stat_result.results[index].stat.exists
       fail_msg: "File {{ item }} not found"
     loop: "{{ expected_backup_dirs }}"
@@ -28,7 +28,7 @@
       index_var: index
 
   - name: (Re)make a restore location
-    file:
+    ansible.builtin.file:
       path: /opt/test-restore
       state: "{{ item }}"
       mode: 0700
@@ -37,20 +37,20 @@
       - directory
 
   - name: Attempt to restore backup
-    command: "/usr/local/bin/duplicity file:///backupdest/awesome-config /opt/test-restore"
+    ansible.builtin.command: "/usr/local/bin/duplicity file:///backupdest/awesome-config /opt/test-restore"
     args:
       creates: "{{ expected_restored_files }}"
     environment:
       PASSPHRASE: duplicity
 
   - name: Find restored files
-    stat:
+    ansible.builtin.stat:
       path: "{{ item }}"
     register: stat_result
     loop: "{{ expected_restored_files }}"
 
   - name: Verify restored files all exist
-    assert:
+    ansible.builtin.assert:
       that: stat_result.results[index].stat.exists
       fail_msg: "File {{ item }} not found"
     loop: "{{ expected_restored_files }}"

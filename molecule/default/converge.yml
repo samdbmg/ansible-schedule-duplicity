@@ -14,7 +14,7 @@
   tasks:
 
     - name: "Include ansible-schedule-duplicity"
-      include_role:
+      ansible.builtin.include_role:
         # Apply the role from the top-level directory name rather than hardcoding
         name: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') | basename }}"
 
@@ -29,6 +29,6 @@
   tasks:
 
     - name: "Include ansible-schedule-duplicity"
-      include_role:
+      ansible.builtin.include_role:
         # Apply the role from the top-level directory name rather than hardcoding
         name: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') | basename }}"

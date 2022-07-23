@@ -1,15 +1,15 @@
 ---
 - name: Include OS-specific variables.
-  include_vars: "{{ ansible_os_family }}.yml"
+  ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
 
 - name: Install Duplicity library requirements
-  package:
+  ansible.builtin.package:
     name: "{{ _duplicity_dependent_packages }}"
     state: present
   when: install_duplicity
 
 - name: Install Duplicity and backend support Python modules
-  pip:
+  ansible.builtin.pip:
     name:
       - "{{ duplicity_install_package }}"
       - dropbox
@@ -19,14 +19,14 @@
   when: install_duplicity
 
 - name: Install a helper script to run duplicity in the virtualenv
-  template:
+  ansible.builtin.template:
     src: duplicity-helper.sh.j2
     dest: "{{ duplicity_binary }}"
     mode: 0755
   when: install_duplicity
 
 - name: Template out credentials file
-  template:
+  ansible.builtin.template:
     src: duplicity-backup.env.j2
     dest: /etc/{{ duplicity_install_name }}-backup.env
     owner: root
@@ -35,21 +35,21 @@
 
 # Run commands manually
 - name: Run manual backups
-  command: "{{ duplicity_binary }} --full-if-older-than {{ full_backup_after }} {{ item.path }} {{ (item.backup_url_stem | default(backup_url_stem)).rstrip('/') }}/{{ (item.name | default(item.path)).strip('/') }}"  # noqa 204 - Command line too long, can't wrap
-  environment: "{{ backup_env_vars| combine({'PASSPHRASE': gpg_key}) }}"
+  ansible.builtin.command: "{{ duplicity_binary }} --full-if-older-than {{ full_backup_after }} {{ item.path }} {{ (item.backup_url_stem | default(backup_url_stem)).rstrip('/') }}/{{ (item.name | default(item.path)).strip('/') }}"  # noqa 204 - Command line too long, can't wrap
+  environment: "{{ backup_env_vars | combine({'PASSPHRASE': gpg_key}) }}"
   loop: "{{ duplicity_target_paths }}"
   when: run_backup_now
   changed_when: false  # Running manual backups always leads to changes!
 
 - name: Run manual stale backup deletion
-  command: "{{ duplicity_binary }} remove-older-than {{ delete_backups_after }} {{ (item.backup_url_stem | default(backup_url_stem)).rstrip('/') }}/{{ (item.name | default(item.path)).strip('/') }}"  # noqa 204 - Command line too long, can't wrap
-  environment: "{{ backup_env_vars| combine({'PASSPHRASE': gpg_key}) }}"
+  ansible.builtin.command: "{{ duplicity_binary }} remove-older-than {{ delete_backups_after }} {{ (item.backup_url_stem | default(backup_url_stem)).rstrip('/') }}/{{ (item.name | default(item.path)).strip('/') }}"  # noqa 204 - Command line too long, can't wrap
+  environment: "{{ backup_env_vars | combine({'PASSPHRASE': gpg_key}) }}"
   loop: "{{ duplicity_target_paths }}"
   when: run_backup_now
   changed_when: false  # Running manual backups always leads to changes!
 
 - name: Insert duplicity commands into crontab
-  template:
+  ansible.builtin.template:
     src: duplicity-backup.cron.j2
     dest: /etc/cron.d/{{ duplicity_install_name }}
     owner: root
