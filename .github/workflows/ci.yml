@@ -51,7 +51,7 @@ jobs:
         with:
           python-version: '3.x'
       - name: Install deps
-        run: pip3 install ansible ansible-lint molecule-plugins[docker]
+        run: pip3 install ansible ansible-lint 'molecule>=5.0.1' molecule-plugins[docker]
 
       - name: Create instances, prepare environment
         run: molecule create && molecule prepare
