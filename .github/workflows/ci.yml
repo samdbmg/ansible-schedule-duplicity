@@ -2,6 +2,8 @@
 name: CI with Molecule
 "on":
   push:
+    branches:
+      - 'main'
   pull_request:
   workflow_dispatch:
   # Build master every Thursday at 7AM (schedule only applies to the master branch)
@@ -15,9 +17,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setup Python 3
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.x'
       - name: Append GitHub Actions system path
@@ -45,9 +47,9 @@ jobs:
       MOLECULE_DISTRO: ${{ matrix.distro }}
     steps:
       - name: checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setup Python 3
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.x'
       - name: Install deps
