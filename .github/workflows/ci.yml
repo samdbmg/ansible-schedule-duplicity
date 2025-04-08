@@ -6,6 +6,14 @@ name: CI with Molecule
       - 'main'
   pull_request:
   workflow_dispatch:
+      inputs:
+        verbosity:
+          description: Set Ansible output verbosity
+          type: choice
+          options:
+            - "0"
+            - "3"
+          default: "0"
   # Build master every Thursday at 7AM (schedule only applies to the master branch)
   schedule:
     - cron: "0 7 * * 4"
@@ -15,6 +23,8 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
+    env:
+      MOLECULE_VERBOSITY: ${{ github.event.inputs.verbosity || 0 }}
     steps:
       - name: checkout
         uses: actions/checkout@v4
@@ -44,6 +54,7 @@ jobs:
       PY_COLORS: '1'
       ANSIBLE_FORCE_COLOR: '1'
       MOLECULE_DISTRO: ${{ matrix.distro }}
+      MOLECULE_VERBOSITY: ${{ github.event.inputs.verbosity || 0 }}
     steps:
       - name: checkout
         uses: actions/checkout@v4
