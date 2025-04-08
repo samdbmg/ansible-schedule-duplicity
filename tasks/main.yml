@@ -13,8 +13,9 @@
     name:
       - wheel
       - "pip>=24"
+      - setuptools
     virtualenv: "{{ duplicity_venv_path }}"
-    virtualenv_command: python3 -m venv
+    virtualenv_command: "python3 -m venv"
     state: present
   when: install_duplicity
 
@@ -24,7 +25,7 @@
       - dropbox
       - "{{ duplicity_install_package }}"
     virtualenv: "{{ duplicity_venv_path }}"
-    virtualenv_command: python3 -m venv
+    virtualenv_command: "python3 -m venv"
     state: present
   when: install_duplicity
 
