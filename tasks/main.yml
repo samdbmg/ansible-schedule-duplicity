@@ -27,6 +27,9 @@
     virtualenv: "{{ duplicity_venv_path }}"
     virtualenv_command: "python3 -m venv"
     state: present
+  register: venv_install
+  # Work around a bug where argparse gets installed repeatedly: it's in the standard library, so it never really installs
+  changed_when: '("Downloading dropbox" or "Downloading " + duplicity_install_package) in venv_install.stdout'
   when: install_duplicity
 
 - name: Install a helper script to run duplicity in the virtualenv
