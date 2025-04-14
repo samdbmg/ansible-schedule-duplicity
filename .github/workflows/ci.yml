@@ -2,8 +2,18 @@
 name: CI with Molecule
 "on":
   push:
+    branches:
+      - 'main'
   pull_request:
   workflow_dispatch:
+      inputs:
+        verbosity:
+          description: Set Ansible output verbosity
+          type: choice
+          options:
+            - "0"
+            - "3"
+          default: "0"
   # Build master every Thursday at 7AM (schedule only applies to the master branch)
   schedule:
     - cron: "0 7 * * 4"
@@ -13,11 +23,13 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
+    env:
+      MOLECULE_VERBOSITY: ${{ github.event.inputs.verbosity || 0 }}
     steps:
       - name: checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setup Python 3
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.x'
       - name: Append GitHub Actions system path
@@ -35,19 +47,19 @@ jobs:
     strategy:
       matrix:
         include:
-          - distro: ubuntu1804
           - distro: ubuntu2004
-          - distro: centos7
-          - distro: centos8
+          - distro: ubuntu2204
+          - distro: rockylinux9
     env:
       PY_COLORS: '1'
       ANSIBLE_FORCE_COLOR: '1'
       MOLECULE_DISTRO: ${{ matrix.distro }}
+      MOLECULE_VERBOSITY: ${{ github.event.inputs.verbosity || 0 }}
     steps:
       - name: checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setup Python 3
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.x'
       - name: Install deps
